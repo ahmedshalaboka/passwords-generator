@@ -1,0 +1,103 @@
+<html>
+    <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+        <link rel="stylesheet" href="index.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Inter:wght@100&family=Roboto:wght@400;500&family=Unbounded:wght@400;600;800&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+        <h1>Generate a</h1>
+        <h3>random password</h3>
+        <p id="never">Never use an insecure password again </p>
+        <button class="button" onclick="getNum()">Generate</button>
+        <p class="button" onclick="togl()" id="button">using symbols</p>
+        <div id="pass-container">
+            <p id="pass-one" class="copy" ></p>
+            <p id="pass-two" class="copy"></p>
+        </div>
+        <div id="snackbar">password copy</div>
+        </div>
+        <script>
+            const characters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9","~","`","!","@","#","$","%","^","&","*","(",")","_","-","+","=","{","[","}","]",",","|",":",";","<",">",".","?",
+"/"];
+let passOne=document.getElementById('pass-one');
+let passTwo=document.getElementById('pass-two');
+let buttonText=document.getElementById('button')
+let toggle = false;
+let newArray=[];
+
+function togl(){
+    toggle=!toggle
+    if(toggle){
+      buttonText.textContent="using symbols"
+    }else{
+      buttonText.textContent="dont use symbols"
+    }
+};
+function getRandom(chara){
+  return  Math.floor(Math.random()*chara.length)
+};
+function getNum(){
+    if(toggle){
+      voidSembols()
+         passOne.textContent=''
+         passTwo.textContent=''
+         getNum2(newArray)
+         getnum1(newArray)
+    }else{
+         passOne.textContent=''
+         passTwo.textContent=''
+         getNum2(characters)
+         getnum1(characters)
+    };
+   
+};
+function getNum2(ch){
+    
+       for(let i =0 ; i<15 ; i++){
+         passTwo.textContent+= ch[getRandom(ch)] 
+       }
+   }
+
+function getnum1(ch){
+       for(let i =0 ; i<15 ; i++){
+         passOne.textContent+= ch[getRandom(ch)] 
+       }
+}
+
+ function voidSembols(){
+    
+        for(let i = 0; i < characters.length ; i++){
+            if(!((characters[i] < 'A' || characters[i] > 'Z') &&
+                    (characters[i] < 'a' || characters[i] > 'z') && (characters[i] <"0" ||characters[i]> "9"))){
+                       newArray.push(characters[i])
+                        
+                    }
+                    
+        }
+        
+    }
+    
+
+    var copy = document.querySelectorAll(".copy"); 
+
+for (const copied of copy) { 
+  copied.onclick = function() { 
+    document.execCommand("copy"); 
+  };  
+  copied.addEventListener("copy", function(event) { 
+    event.preventDefault(); 
+    if (event.clipboardData) { 
+      event.clipboardData.setData("text/plain", copied.textContent);
+      console.log(event.clipboardData.getData("text"))
+        var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+    };
+  });
+};
+    
+        </script>
+    </body>
+</html>
